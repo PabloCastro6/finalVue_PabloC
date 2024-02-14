@@ -2,8 +2,8 @@
     <p>Nuevo Modelo</p>
     <form @submit.prevent="crearModelo">
     <label for="marca">Marca</label>
-    <select id="marca" v-model="marca">
-        <option v-for="marca in marcas" :value="marca.id">{{ marca.nombre }}</option>
+    <select id="marca" v-model="marcaSeleccionada">
+        <option v-for="marca in marcas" :key="marca.id" :value="marca.id">{{ marca.nombre }}</option>
     </select><br>
     <label for="modelo">Modelo</label>
     <input id="modelo" v-model="modelo" type="text"><br>
@@ -11,15 +11,49 @@
     <input id="pais" v-model="pais" type="text"><br>
     <label for="precioExtra">Precio extra</label>
     <input id="precioExtra" v-model="precioExtra" type="number"><br>
-    <button type="submit">Crear Modelo</button>
+    <button type="submit">Obtener Modelo</button>
 </form>
     
     </template>
     
     <script>
-    export default {
-    
-    }
+   // import bbdd from '@/assets/bbdd.json'
+
+export default {
+    name: 'NuevoModelo',
+    data() {
+        return {
+            marcas:[],
+            marcaSeleccionada: null,
+            Modelo:null,
+            PrecioExtra:""
+        }
+    },
+    mounted() {
+        
+        this.cargarMarcas();
+    },
+    methods: {
+       /* crearModelo() {
+            console.log(this.nombre,this.año,this.pais)
+            console.log(bbdd)
+
+        }*/
+        async cargarMarcas() {
+      try {
+        // Asume que tu proyecto Vue se sirve en localhost y el archivo está en la carpeta public
+        const respuesta = await fetch('/bbdd.json');
+        if (!respuesta.ok) {
+          throw new Error('No se pudo cargar el archivo JSON');
+        }
+        const datos = await respuesta.json();
+        this.marcas = datos.marcas;
+      } catch (error) {
+        console.error('Error al cargar el archivo JSON:', error);
+      }
+    },
+  },
+};
     </script>
     
     <style>

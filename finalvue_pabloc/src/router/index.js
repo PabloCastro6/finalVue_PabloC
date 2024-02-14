@@ -6,6 +6,7 @@ import Clientes from '@/views/Clientes.vue'
 import Marcas from '@/views/Marcas.vue'
 import Modelos from '@/views/Modelos.vue'
 import NuevaMarca from '@/views/NuevaMarca.vue'
+import NuevoModelo from '@/views/NuevoModelo.vue'
 
 
 // Vue.use(VueRouter);
@@ -39,6 +40,13 @@ const routes = [
     name: 'Nueva Marca',
     component: NuevaMarca
   },
+
+  {
+    path: '/marcas/modelos/nuevo',
+    name: 'Nuevo Modelo',
+    component: NuevoModelo
+  }
+  
   
 ];
 
