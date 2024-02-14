@@ -1,6 +1,5 @@
 <template>
     <div class="izquierda"><MenuNavegacion></MenuNavegacion></div>
-    
     <div class="derecha"><router-view/></div>
 </template>
 

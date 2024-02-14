@@ -5,7 +5,36 @@
     "nombre":"Alfa Romeo",
     "origen": "Italia",
     "anioFundacion": 1910
-    }
+    },
+
+    {
+      "id":2,
+      "nombre":"BMW",
+      "origen": "Alemania",
+      "anioFundacion": 1916
+      },
+
+      {
+        "id":3,
+        "nombre":"Mercedes-benz",
+        "origen": "Stuttgart",
+        "anioFundacion": 1926
+        },
+
+        {
+          "id":4,
+          "nombre":"Tesla",
+          "origen": "California",
+          "anioFundacion": 2003
+          },
+          {
+            "id":5,
+            "nombre":"Alfa Romeo",
+            "origen": "Milan",
+            "anioFundacion": 1910
+            }
+
+
     
   ],
   "modelos": [
