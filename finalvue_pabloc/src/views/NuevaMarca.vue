@@ -2,14 +2,14 @@
     <p>Nueva Marca</p>
     <form @submit.prevent="crearMarca">
         <label for="nombre">Nombre</label><input id="nombre" v-model="nombre" type="text"><br>
-        <label for="año">Año</label><input id="año" v-model="año" type="number"><br>
-        <label for="pais">Pais</label><input id="pais" v-model="pais" type="text">
+        <label for="año">Año de fundacion</label><input id="año" v-model="año" type="number"><br>
+        <label for="pais">Pais de origen</label><input id="pais" v-model="pais" type="text">
         <button type="submit">Crear Marca</button>
     </form>
 </template>
     
 <script>
-import bbdd from '@/assets/bbdd.json'
+//import bbdd from '@/public/bbdd.json'
 export default {
     name: 'NuevaMarca',
     data() {
@@ -20,15 +20,36 @@ export default {
         }
     },
     methods: {
-        crearMarca() {
-            console.log(this.nombre,this.año,this.pais)
-            console.log(bbdd)
+        async crearMarca() {
+      const nuevaMarca = {
+        nombre: this.nombre,
+        año: this.año,
+        pais: this.pais
+      };
+        
+      try {
+        const response = await fetch('http://localhost:3000/marcas', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevaMarca),
+        });
 
+        if (!response.ok) {
+          throw new Error('Error al crear la marca');
         }
+
+        const marcaCreada = await response.json();
+        console.log('Marca creada:', marcaCreada);
+        this.nombre = '';
+        this.año = null;
+        this.pais = '';
+      } catch (error) {
+        console.error('Error al crear la marca:', error);
+      }
     }
- 
-
-
+  }
 }
 </script>
     

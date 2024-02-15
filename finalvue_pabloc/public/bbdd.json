@@ -1,0 +1,95 @@
+{
+  "marcas": [
+    {
+      "id": 1,
+      "nombre": "Alfa Romeo",
+      "origen": "Italia",
+      "anioFundacion": 1910
+    },
+    {
+      "id": 2,
+      "nombre": "BMW",
+      "origen": "Alemania",
+      "anioFundacion": 1916
+    },
+    {
+      "id": 3,
+      "nombre": "Mercedes-benz",
+      "origen": "Stuttgart",
+      "anioFundacion": 1926
+    },
+    {
+      "id": 4,
+      "nombre": "Tesla",
+      "origen": "California",
+      "anioFundacion": 2003
+    },
+    {
+      "id": 5,
+      "nombre": "Ford",
+      "origen": "Estados Unidos",
+      "anioFundacion": 1903
+    },
+    {
+      "nombre": "KIA",
+      "año": 1944,
+      "pais": "Corea",
+      "id": 6
+    }
+  ],
+  "modelos": [
+    {
+      "id": 1,
+      "idMarca": 1,
+      "modelo": "Giulia",
+      "extraPorModelo": 12
+    },
+    {
+      "id": 2,
+      "idMarca": 2,
+      "modelo": "Serie 1",
+      "extraPorModelo": 30
+    },
+    {
+      "id": 3,
+      "idMarca": 3,
+      "modelo": "Clase G",
+      "extraPorModelo": 45
+    },
+    {
+      "id": 4,
+      "idMarca": 4,
+      "modelo": "Model 3",
+      "extraPorModelo": 80
+    },
+    {
+      "id": 5,
+      "idMarca": 5,
+      "modelo": "Focus Familiar",
+      "extraPorModelo": 28
+    }
+  ],
+  "vehiculos": [
+    {
+      "id": 1,
+      "idModelo": 1,
+      "precioDia": 98,
+      "puertas": 4,
+      "sillaInfantil": false
+    }
+  ],
+  "clientes": [
+    {
+      "id": 1,
+      "nombre": "Diego Velázquez",
+      "dni": "76523137I",
+      "alquileres": [
+        {
+          "vehiculo": 1,
+          "numDias": 4,
+          "fechaInic": "12/11/2022"
+        }
+      ]
+    }
+  ]
+}

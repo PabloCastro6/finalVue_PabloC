@@ -40,24 +40,26 @@ export default {
 
         }*/
         async cargarMarcas() {
-      try {
-        // Asume que tu proyecto Vue se sirve en localhost y el archivo está en la carpeta public
-        const respuesta = await fetch('/bbdd.json');
-        if (!respuesta.ok) {
-          throw new Error('No se pudo cargar el archivo JSON');
-        }
-        const datos = await respuesta.json();
-        this.marcas = datos.marcas;
-      } catch (error) {
-        console.error('Error al cargar el archivo JSON:', error);
-      }
-    },
+  try {
+    const respuesta = await fetch('http://localhost:3000/marcas');
+    if (!respuesta.ok) {
+      throw new Error('No se pudo cargar el archivo JSON');
+    }
+    const datos = await respuesta.json();
+    this.marcas = datos;
+  } catch (error) {
+    console.error('Error al cargar las marcas:', error);
+  }
+}
+
+
+
   },
 };
     </script>
     
     <style>
-    /* Estilos generales del formulario */
+   
 form {
     max-width: 500px;
     margin: 20px auto;
@@ -67,7 +69,7 @@ form {
     background-color: #f9f9f9;
 }
 
-/* Estilos para las etiquetas */
+
 label {
     display: block;
     margin-bottom: 8px;
@@ -75,7 +77,7 @@ label {
     font-size: 16px;
 }
 
-/* Estilos para los inputs y select */
+
 input[type="text"],
 input[type="number"],
 select {
@@ -87,7 +89,7 @@ select {
     box-sizing: border-box;
 }
 
-/* Estilos para el botón de envío */
+
 button {
     width: 100%;
     padding: 10px;
@@ -103,7 +105,7 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Mejora visual para el formulario */
+
 br {
     display: none;
 }
