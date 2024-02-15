@@ -8,6 +8,7 @@ import Modelos from '@/views/Modelos.vue'
 import NuevaMarca from '@/views/NuevaMarca.vue'
 import NuevoModelo from '@/views/NuevoModelo.vue'
 import Alquiler from '@/views/Alquiler.vue'
+import Vehiculos from '@/views/Vehiculos.vue'
 
 
 // Vue.use(VueRouter);
@@ -48,9 +49,13 @@ const routes = [
     component: NuevoModelo
   },
 
-
   {
-    path: '/Alquiler',
+    path: '/vehiculos',
+    name: 'Vehiculos',
+    component: Vehiculos
+  },
+  {
+    path: '/alquiler',
     name: 'Alquiler',
     component: Alquiler
   }

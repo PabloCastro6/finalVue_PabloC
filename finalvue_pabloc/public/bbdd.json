@@ -45,6 +45,12 @@
       "extraPorModelo": 30
     },
     {
+      "id": 6,
+      "idMarca": 2,
+      "modelo": "Serie 2",
+      "extraPorModelo": 17
+    },
+    {
       "id": 3,
       "idMarca": 3,
       "modelo": "Clase G",
@@ -68,6 +74,13 @@
       "id": 1,
       "idModelo": 1,
       "precioDia": 98,
+      "puertas": 4,
+      "sillaInfantil": false
+    },
+    {
+      "id": 2,
+      "idModelo": 2,
+      "precioDia": 35,
       "puertas": 4,
       "sillaInfantil": false
     }
