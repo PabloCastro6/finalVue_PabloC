@@ -2,13 +2,13 @@
     <p>Nuevo Modelo</p>
     <form @submit.prevent="crearModelo">
     <label for="marca">Marca</label>
-    <select id="marca" v-model="marcaSeleccionada">
+    <select id="marca" v-model="marcaSeleccionada" required>
         <option v-for="marca in marcas" :key="marca.id" :value="marca.id">{{ marca.nombre }}</option>
     </select><br>
     <label for="modelo">Modelo</label>
-    <input id="modelo" v-model="modelo" type="text"><br>
+    <input id="modelo" v-model="modelo" type="text" required><br>
     <label for="pais">País</label>
-    <input id="pais" v-model="pais" type="text"><br>
+    <input id="pais" v-model="pais" type="text" required><br>
     <label for="precioExtra">Precio extra</label>
     <input id="precioExtra" v-model="precioExtra" type="number"><br>
     <button type="submit">Obtener Modelo</button>
@@ -34,11 +34,33 @@ export default {
         this.cargarMarcas();
     },
     methods: {
-       /* crearModelo() {
-            console.log(this.nombre,this.año,this.pais)
-            console.log(bbdd)
+        async crearModelo() {
+    const nuevoModelo = {
+      nombre: this.nombre,
+      año: this.año, 
+      pais: this.pais,
+    };
+    
+    try {
+      const respuesta = await fetch('http://localhost:3000/modelos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoModelo),
+      });
 
-        }*/
+      if (!respuesta.ok) {
+        throw new Error('Error al crear el modelo');
+      }
+
+     /* const modeloCreado = await respuesta.json();*/
+      /*console.log('Modelo creado:', modeloCreado);*/
+      
+    } catch (error) {
+      console.error('Error al crear el modelo:', error);
+    }
+  },
         async cargarMarcas() {
   try {
     const respuesta = await fetch('http://localhost:3000/marcas');

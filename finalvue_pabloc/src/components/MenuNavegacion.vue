@@ -7,26 +7,26 @@
         <li>
           <router-link to="/" exact>Inicio</router-link>
         </li>
-        <li @click="toggleSubmenu('marcas')">
-          Marcas
-          <ul v-show="submenus.marcas" class="submenu">
-            <li><router-link to="/marcas/nueva">Nueva marca</router-link></li>
-            <li><router-link to="/marcas/modelos">Modelos</router-link></li>
-            <li><router-link to="/marcas/modelos/nuevo">Nuevo Modelo</router-link></li>
-          </ul>
-        </li>
-        <li @click="toggleSubmenu('vehiculos')">
-        Vehículos
-          <ul v-show="submenus.vehiculos" class="submenu">
-            <li><router-link to="/vehiculos/nuevo">Nuevo vehículo</router-link></li>
-            <li><router-link to="/vehiculos/alquiler">Alquiler</router-link></li>
-          </ul>
-        </li>
         <li>
-          <router-link to="/clientes">Clientes</router-link>
-        </li>
-      </ul>
-    </div>
+        Marcas
+        <ul class="submenu">
+          <li><router-link to="/marcas/nueva">Nueva marca</router-link></li>
+          <li><router-link to="/marcas/modelos">Modelos</router-link></li>
+          <li><router-link to="/marcas/modelos/nuevo">Nuevo Modelo</router-link></li>
+        </ul>
+      </li>
+      <li>
+        Vehículos
+        <ul class="submenu">
+          <li><router-link to="/vehiculos/nuevo">Nuevo vehículo</router-link></li>
+          <li><router-link to="/vehiculos/alquiler">Alquiler</router-link></li>
+        </ul>
+      </li>
+      <li>
+        <router-link to="/clientes">Clientes</router-link>
+      </li>
+    </ul>
+  </div>
   </template>
   
   <script>
@@ -86,19 +86,6 @@
     transition: background-color 0.3s;
   }
   
-  
-  .submenu {
-    list-style-type: none;
-    padding: 0;
-    /*display: none;*/
-    background-color: #488acc;
-  }
-  
-  .submenu a {
-    padding-left: 30px;
-    font-size: 0.9em;
-    background: #167adf;
-  }
   
   </style>
   
