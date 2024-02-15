@@ -29,12 +29,6 @@
       "nombre": "Ford",
       "origen": "Estados Unidos",
       "anioFundacion": 1903
-    },
-    {
-      "nombre": "KIA",
-      "año": 1944,
-      "pais": "Corea",
-      "id": 6
     }
   ],
   "modelos": [

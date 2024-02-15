@@ -23,8 +23,8 @@ export default {
         async crearMarca() {
       const nuevaMarca = {
         nombre: this.nombre,
-        año: this.año,
-        pais: this.pais
+        anioFundacion: this.año,
+        origen: this.pais
       };
         
       try {

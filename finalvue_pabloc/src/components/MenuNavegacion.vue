@@ -8,7 +8,7 @@
           <router-link to="/" exact>Inicio</router-link>
         </li>
         <li>
-        Marcas
+          <router-link to="/Marcas" exact>Marcas</router-link>
         <ul class="submenu">
           <li><router-link to="/marcas/nueva">Nueva marca</router-link></li>
           <li><router-link to="/marcas/modelos">Modelos</router-link></li>
@@ -16,7 +16,7 @@
         </ul>
       </li>
       <li>
-        Vehículos
+        <router-link to="/Vehiculos" exact>Vehiculos</router-link>
         <ul class="submenu">
           <li><router-link to="/vehiculos/nuevo">Nuevo vehículo</router-link></li>
           <li><router-link to="/vehiculos/alquiler">Alquiler</router-link></li>
