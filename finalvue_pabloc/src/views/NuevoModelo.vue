@@ -60,6 +60,7 @@ export default {
       }
     },
 
+    
     async cargarMarcas() {
       try {
         const respuesta = await fetch('http://localhost:3000/marcas');

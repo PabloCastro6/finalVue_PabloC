@@ -30,6 +30,7 @@
       "origen": "Estados Unidos",
       "anioFundacion": 1903
     }
+    
   ],
   "modelos": [
     {
@@ -43,12 +44,6 @@
       "idMarca": 2,
       "modelo": "Serie 1",
       "extraPorModelo": 30
-    },
-    {
-      "id": 6,
-      "idMarca": 2,
-      "modelo": "Serie 2",
-      "extraPorModelo": 17
     },
     {
       "id": 3,
@@ -68,6 +63,7 @@
       "modelo": "Focus Familiar",
       "extraPorModelo": 28
     }
+   
   ],
   "vehiculos": [
     {
@@ -83,8 +79,31 @@
       "precioDia": 35,
       "puertas": 4,
       "sillaInfantil": false
+    },
+
+    {
+      "id": 3,
+      "idModelo": 3,
+      "precioDia": 89,
+      "puertas": 2,
+      "sillaInfantil": true
+    },
+    {
+      "id": 4,
+      "idModelo": 4,
+      "precioDia": 105,
+      "puertas": 4,
+      "sillaInfantil": false
+    },
+    {
+      "id": 5,
+      "idModelo": 5,
+      "precioDia": 20,
+      "puertas": 4,
+      "sillaInfantil": false
     }
   ],
+  
   "clientes": [
     {
       "id": 1,

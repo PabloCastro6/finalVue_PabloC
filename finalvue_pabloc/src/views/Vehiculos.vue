@@ -113,7 +113,7 @@ export default {
 
             
         });*/
-        const respuesta = await fetch(`http://localhost:3000/vehiculos?idModelo=1&idModelo=2`); /*Filtar para varios modelos */
+        const respuesta = await fetch(`http://localhost:3000/vehiculos?idModelo=1&idModelo=${idModelos}`); /*Filtar para varios modelos */
         if (!respuesta.ok) {
           throw new Error('No se pudo cargar el archivo JSON');
         }
@@ -128,7 +128,7 @@ export default {
     
     async obtenerClientes(idVehiculo) {
       try {
-        const respuesta = await fetch(`http://localhost:3000/clientes?idModelo=${idModelo}`); /* Acceder desde clientes a alquileres, vehiculo
+        const respuesta = await fetch(`http://localhost:3000/clientes?idModelo=${idVehiculo}`); /* Acceder desde clientes a alquileres, vehiculo
         Obtener el cliente, que ha alquilado ese vehiculo*/
         if (!respuesta.ok) {
           throw new Error('No se pudo cargar el archivo JSON');
@@ -139,6 +139,10 @@ export default {
         console.error('Error al cargar las vehiculos:', error);
         return [];
       }
+    },
+
+    async obtenerVehiculos() {
+      
     }
 
     }
