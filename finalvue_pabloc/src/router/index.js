@@ -55,7 +55,7 @@ const routes = [
     component: Vehiculos
   },
   {
-    path: '/alquiler',
+    path: '/vehiculos/alquiler',
     name: 'Alquiler',
     component: Alquiler
   }

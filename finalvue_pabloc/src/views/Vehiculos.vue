@@ -43,14 +43,13 @@ export default {
     },
     watch:{
         /* Se usa para observar el valor de la variable marcaSeleccionada, para listar los modelos*/
+
         async marcaSeleccionada(idMarca) {
             this.modelos = await this.obtenerModelos(idMarca);
             this.vehiculos=[];
             this.modelos.forEach(async modelo  => { 
                 console.log(modelo.id);
-                this.vehiculos.push(...await this.obtenerVehiculos(modelo.id));
-
-                
+                this.vehiculos.push(...await this.obtenerVehiculos(modelo.id));  
             });
            
 
@@ -64,7 +63,6 @@ export default {
         }
     },
     methods:{
-        
     async obtenerMarcas() {
       try {
         const respuesta = await fetch('http://localhost:3000/marcas');
@@ -110,8 +108,6 @@ export default {
       try {
         /*let filtro = "idModelo=";
         idModelo.forEach(idModelo => {
-
-            
         });*/
         const respuesta = await fetch(`http://localhost:3000/vehiculos?idModelo=1&idModelo=${idModelos}`); /*Filtar para varios modelos */
         if (!respuesta.ok) {
