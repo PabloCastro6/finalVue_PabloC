@@ -1,18 +1,20 @@
 <template>
   <div class="contenedor">
+    <!-- Listado de Marcas -->
     <div class="marcas">
       <h1>Listado de Marcas</h1>
       <ul>
-        <li v-for="marca in marcas" :key="marca.id" @click="seleccionarMarca(marca)">
+        <li v-for="marca in marcasOrdenadas" :key="marca.id" @click="marcaSeleccionada = marca">
           {{ marca.nombre }} - Precio medio: {{ marca.precioMedio.toFixed(2) }} €
         </li>
       </ul>
     </div>
+    <!-- Modelos de la Marca Seleccionada -->
     <div class="modelos" v-if="marcaSeleccionada">
       <h2>Modelos de {{ marcaSeleccionada.nombre }}</h2>
       <ul>
         <li v-for="modelo in modelosDeMarcaSeleccionada" :key="modelo.id">
-          {{ modelo.modelo }} - {{ modelo.precioDia }} €/día
+          {{ modelo.modelo }} - Precio: {{ modelo.precioDia }} €/día
         </li>
       </ul>
     </div>
@@ -26,54 +28,53 @@ export default {
     return {
       marcas: [],
       modelos: [],
+      vehiculos: [], // Agregar vehículos aquí
       marcaSeleccionada: null,
     };
   },
   computed: {
+    marcasOrdenadas() {
+       // Crea una copia del array de marcas y luego ordena esa copia
+      return  [...this.marcas].sort((a, b) => b.precioMedio - a.precioMedio);
+    },
     modelosDeMarcaSeleccionada() {
       if (!this.marcaSeleccionada) return [];
-      return this.modelos.filter(modelo => modelo.idMarca === this.marcaSeleccionada.id)
+      // Filtra modelos por la marca seleccionada y encuentra su precio en los vehículos
+      return this.modelos
+        .filter(modelo => modelo.idMarca === this.marcaSeleccionada.id)
         .map(modelo => {
-          const vehiculo = this.vehiculos.find(vehiculo => vehiculo.idModelo === modelo.id);
-          return {
-            ...modelo,
-            precioDia: vehiculo ? vehiculo.precioDia : 'No disponible'
-          };
+          // Encuentra vehículos para este modelo
+          const vehiculo = this.vehiculos.find(v => v.idModelo === modelo.id);
+          // Añade precioDia al modelo, si el vehículo existe
+          return { ...modelo, precioDia: vehiculo ? vehiculo.precioDia : 'No disponible' };
         });
     }
   },
-  mounted() {
-    this.cargarMarcasYModelos();
+  async mounted() {
+    await this.cargarDatos();
   },
   methods: {
-    seleccionarMarca(marca) {
-      this.marcaSeleccionada = marca;
-    },
-    async cargarMarcasYModelos() {
+    async cargarDatos() {
       try {
-        const [marcasRespuesta, modelosRespuesta, vehiculosRespuesta] = await Promise.all([
-          fetch('http://localhost:3000/marcas'),
-          fetch('http://localhost:3000/modelos'),
-          fetch('http://localhost:3000/vehiculos')
-        ]);
-        const marcas = await marcasRespuesta.json();
-        this.modelos = await modelosRespuesta.json();
-        this.vehiculos = await vehiculosRespuesta.json();
+        const respuesta = await fetch('/bbdd.json');
+        const { marcas, modelos, vehiculos } = await respuesta.json();
+        this.modelos = modelos;
+        this.vehiculos = vehiculos;
 
+        // Calcula el precio medio de los modelos para cada marca
         this.marcas = marcas.map(marca => {
-          const modelosDeMarca = this.modelos.filter(modelo => modelo.idMarca === marca.id);
+          const modelosDeMarca = modelos.filter(modelo => modelo.idMarca === marca.id);
           const precios = modelosDeMarca.map(modelo => {
-            const vehiculo = this.vehiculos.find(vehiculo => vehiculo.idModelo === modelo.id);
+            const vehiculo = vehiculos.find(v => v.idModelo === modelo.id);
             return vehiculo ? vehiculo.precioDia : 0;
           });
-
-          const precioMedio = precios.reduce((acc, precio) => acc + precio, 0) / (precios.length || 1);
+          const precioMedio = precios.length ? precios.reduce((acc, precio) => acc + precio, 0) / precios.length : 0;
           return { ...marca, precioMedio };
         });
       } catch (error) {
-        console.error('Error al cargar marcas y modelos:', error);
+        console.error('Error al cargar datos:', error);
       }
-    }
+    },
   }
 }
 </script>
@@ -81,33 +82,32 @@ export default {
 <style>
 .contenedor {
   display: flex;
-  justify-content: start;
-  align-items: flex-start;
+  justify-content: space-around;
   padding: 20px;
 }
 
 .marcas, .modelos {
-  margin: 10px;
+  flex-basis: 45%; /* Ajusta el ancho de cada columna */
+  border: 1px solid #ccc; /* Borde para delimitar las áreas */
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  background-color: #fff;
-  width: calc(50% - 40px); 
-  max-height: 80vh;
-  overflow-y: auto; 
+  border-radius: 8px; /* Bordes redondeados */
+  background-color: #f9f9f9; /* Fondo claro */
 }
 
 .marcas li, .modelos li {
   cursor: pointer;
-  margin: 10px 0;
+  margin: 5px 0;
+  list-style-type: none; /* Quitar estilos de lista */
   padding: 10px;
-  border-radius: 5px;
-  list-style-type: none; 
-  transition: background-color 0.3s, transform 0.3s;
+  border-bottom: 1px solid #eee; /* Borde sutil entre elementos */
+}
+
+.marcas li:hover, .modelos li:hover {
+  background-color: #eaeaea; /* Cambio de color al pasar el ratón */
 }
 
 .marcas h1, .modelos h2 {
-  color: #333;
-  text-align: center;
+  color: #333; /* Color de texto para los títulos */
+  margin-bottom: 20px; /* Espacio después del título */
 }
-</style>
+</style>  

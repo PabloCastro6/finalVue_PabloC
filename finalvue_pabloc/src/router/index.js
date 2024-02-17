@@ -2,13 +2,18 @@
 // import Vue from 'vue';
 import {createRouter,createWebHistory} from 'vue-router';
 import Inicio from '@/views/Inicio.vue';
-import Clientes from '@/views/Clientes.vue'
+
 import Marcas from '@/views/Marcas.vue'
-import Modelos from '@/views/Modelos.vue'
 import NuevaMarca from '@/views/NuevaMarca.vue'
+import Modelos from '@/views/Modelos.vue'
 import NuevoModelo from '@/views/NuevoModelo.vue'
-import Alquiler from '@/views/Alquiler.vue'
+
 import Vehiculos from '@/views/Vehiculos.vue'
+import NuevoVehiculo from '@/views/NuevoVehiculo.vue'
+import Alquiler from '@/views/Alquiler.vue'
+
+import Clientes from '@/views/Clientes.vue'
+
 
 
 // Vue.use(VueRouter);
@@ -20,47 +25,46 @@ const routes = [
     component: Inicio
   },
   {
-    path: '/clientes',
-    name: 'Clientes',
-    component: Clientes
-  },
-
-  {
     path: '/marcas',
     name: 'Marcas',
-    component: Marcas,
+    component: Marcas
   },
-
-  {
-    path: '/marcas/modelos',
-    name: 'Modelos',
-    component: Modelos
-  },
-
   {
     path: '/marcas/nueva',
     name: 'Nueva Marca',
     component: NuevaMarca
   },
-
+  {
+    path: '/marcas/modelos',
+    name: 'Modelos',
+    component: Modelos
+  },
   {
     path: '/marcas/modelos/nuevo',
     name: 'Nuevo Modelo',
     component: NuevoModelo
   },
-
   {
     path: '/vehiculos',
     name: 'Vehiculos',
     component: Vehiculos
   },
   {
+    path: '/vehiculos/nuevo',
+    name: 'Vehiculos',
+    component: NuevoVehiculo
+  },
+  
+  {
     path: '/vehiculos/alquiler',
     name: 'Alquiler',
     component: Alquiler
-  }
-  
-  
+  },
+  {
+    path: '/clientes',
+    name: 'Clientes',
+    component: Clientes
+  },
 ];
 
 const router = createRouter({
