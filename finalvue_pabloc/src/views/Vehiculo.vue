@@ -27,13 +27,19 @@
   </table>
 
   <button @click="mostrarFormularioNuevoVehiculo = true">Nuevo Vehículo</button>
-  <nuevo-vehiculo v-if="mostrarFormularioNuevoVehiculo" :marca="marcaSeleccionada"
-    :modelo="modeloSeleccionado"></nuevo-vehiculo>
+  
+  <nuevo-vehiculo v-if="mostrarFormularioNuevoVehiculo" :marcaPreseleccionada="marcaSeleccionada"
+    :modeloPreseleccionado="modeloSeleccionado"></nuevo-vehiculo>
 </template>
 
     
 <script>
+import NuevoVehiculo from '@/components/NuevoVehiculo.vue';
+
 export default {
+  components: {
+    NuevoVehiculo
+  },
   data() {
     return {
       marcas: [],

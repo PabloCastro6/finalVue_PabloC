@@ -112,7 +112,7 @@
       "puertas": 4,
       "sillaInfantil": false
     }
-
+  
   ],
   "clientes": [
     {
@@ -145,5 +145,4 @@
       ]
     }
   ]
-
 }
