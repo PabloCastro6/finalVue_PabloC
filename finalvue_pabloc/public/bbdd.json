@@ -104,7 +104,15 @@
       "precioDia": 20,
       "puertas": 4,
       "sillaInfantil": false
+    },
+    {
+      "id": 6,
+      "idModelo": 6,
+      "precioDia": 40,
+      "puertas": 4,
+      "sillaInfantil": false
     }
+
   ],
   "clientes": [
     {
@@ -116,8 +124,26 @@
           "vehiculo": 1,
           "numDias": 4,
           "fechaInic": "12/11/2022"
+        },
+        {
+          "vehiculo": 2,
+          "numDias": 3,
+          "fechaInic": "12/09/2018"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "nombre": "Juanito Gomez",
+      "dni": "76453137I",
+      "alquileres": [
+        {
+          "vehiculo": 2,
+          "numDias": 4,
+          "fechaInic": "12/11/2022"
         }
       ]
     }
   ]
+
 }

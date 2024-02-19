@@ -1,68 +1,75 @@
 <template>
-    <p>Vehiculos</p>
+  <p>Vehiculos</p>
 
-    <label for="marca">Marca</label>
-    <select id="marca" v-model="marcaSeleccionada">
-      <option v-for="marca in marcas" :key="marca.id" :value="marca.id">{{ marca.nombre }}</option>
-    </select><br>
+  <label for="marca">Marca</label>
+  <select id="marca" v-model="marcaSeleccionada">
+    <option v-for="marca in marcas" :key="marca.id" :value="marca.id">{{ marca.nombre }}</option>
+  </select><br>
 
-    <label for="modelo">Modelo</label>
-    <select id="modelo" v-model="modeloSeleccionado" :disabled="marcaSeleccionada == null"> <!--Al seleccionar una marca se habilita el select de modelo-->
-      <option v-for="modelo in modelos" :key="modelo.id" :value="modelo.id">{{ modelo.modelo }}</option>
-    </select><br>
-    <table v-if="marcaSeleccionada != null">
+  <label for="modelo">Modelo</label>
+  <select id="modelo" v-model="modeloSeleccionado" :disabled="marcaSeleccionada == null">
+    <!--Al seleccionar una marca se habilita el select de modelo-->
+    <option v-for="modelo in modelos" :key="modelo.id" :value="modelo.id">{{ modelo.modelo }}</option>
+  </select><br>
+  <table v-if="marcaSeleccionada != null">
     <tr>
-        <th>MODELO</th>
-        <th>PRECIO/DIA</th>
-        <th>CLIENTES</th>
+      <th>MODELO</th>
+      <th>PRECIO/DIA</th>
+      <th>CLIENTES</th>
     </tr>
     <tr v-for="vehiculo in vehiculos" :key="vehiculo.id">
-        <td>{{ vehiculo.idModelo }}</td>
-        <td>{{ vehiculo.precioDia }}</td>
-        <td></td>
+      <td>{{ vehiculo.idModelo }}</td>
+      <td>{{ vehiculo.precioDia }}</td>
+      <td><ul>
+        <li v-for="cliente in vehiculo.clientes " :key="cliente.id">{{ cliente.nombre }}</li>
+      </ul></td>
     </tr>
-    </table>
+  </table>
 
+  <button @click="mostrarFormularioNuevoVehiculo = true">Nuevo Vehículo</button>
+  <nuevo-vehiculo v-if="mostrarFormularioNuevoVehiculo" :marca="marcaSeleccionada"
+    :modelo="modeloSeleccionado"></nuevo-vehiculo>
 </template>
+
     
 <script>
 export default {
-    data() {
-        return {
-            marcas: [],
-            modelos:[],
-            vehiculos:[],
-            marcaSeleccionada: null,
-            modeloSeleccionado: null
-        }
-    
+  data() {
+    return {
+      marcas: [],
+      modelos: [],
+      vehiculos: [],
+      marcaSeleccionada: null,
+      modeloSeleccionado: null,
+      mostrarFormularioNuevoVehiculo: false
+    }
+
+
+  },
+  async mounted() {
+    this.marcas = await this.obtenerMarcas()
+  },
+  watch: {
+    /* Se usa para observar el valor de la variable marcaSeleccionada, para listar los modelos*/
+
+    async marcaSeleccionada(idMarca) {
+      this.modelos = await this.obtenerModelos(idMarca);
+      this.vehiculos = [];
+      this.modelos.forEach(async modelo => {
+        this.vehiculos.push(...await this.obtenerVehiculosPorIdModelo(modelo.id));
+      });
+
+
+
 
     },
-    async mounted() {
-        this.marcas = await this.obtenerMarcas()
-    },
-    watch:{
-        /* Se usa para observar el valor de la variable marcaSeleccionada, para listar los modelos*/
+    /* Se usa para observar el valor de la variable modeloSeleccionado, para listar los vehiculos*/
+    async modeloSeleccionado(idModelo) {
+      this.vehiculos = await this.obtenerVehiculosPorIdModelo(idModelo);
 
-        async marcaSeleccionada(idMarca) {
-            this.modelos = await this.obtenerModelos(idMarca);
-            this.vehiculos=[];
-            this.modelos.forEach(async modelo  => { 
-                console.log(modelo.id);
-                this.vehiculos.push(...await this.obtenerVehiculos(modelo.id));  
-            });
-           
-
-
-
-        },
-        /* Se usa para observar el valor de la variable modeloSeleccionado, para listar los vehiculos*/
-        async modeloSeleccionado(idModelo) {
-            this.vehiculos = await this.obtenerVehiculos(idModelo);
-
-        }
-    },
-    methods:{
+    }
+  },
+  methods: {
     async obtenerMarcas() {
       try {
         const respuesta = await fetch('http://localhost:3000/marcas');
@@ -83,7 +90,7 @@ export default {
           throw new Error('No se pudo cargar el archivo JSON');
         }
         return await respuesta.json();
-       
+
       } catch (error) {
         console.error('Error al cargar las modelos:', error);
         return [];
@@ -96,52 +103,50 @@ export default {
         if (!respuesta.ok) {
           throw new Error('No se pudo cargar el archivo JSON');
         }
-        return await respuesta.json();
-        
-      } catch (error) {
-        console.error('Error al cargar las vehiculos:', error);
-        return [];
-      }
-    },
-
-    async obtenerVehiculosPorIdModelos(idModelos) {
-      try {
-        /*let filtro = "idModelo=";
-        idModelo.forEach(idModelo => {
-        });*/
-        const respuesta = await fetch(`http://localhost:3000/vehiculos?idModelo=1&idModelo=${idModelos}`); /*Filtar para varios modelos */
-        if (!respuesta.ok) {
-          throw new Error('No se pudo cargar el archivo JSON');
+        const vehiculos =  await respuesta.json();
+        for(const vehiculo of vehiculos) {
+        vehiculo.clientes = await this.obtenerClientes(vehiculo.id); //Crear un array dentro de cada vehiculo con sus clientes
+                
         }
-        return await respuesta.json();
-        
+          return  vehiculos;
+
       } catch (error) {
         console.error('Error al cargar las vehiculos:', error);
         return [];
       }
     },
 
-    
     async obtenerClientes(idVehiculo) {
       try {
-        const respuesta = await fetch(`http://localhost:3000/clientes?idModelo=${idVehiculo}`); /* Acceder desde clientes a alquileres, vehiculo
-        Obtener el cliente, que ha alquilado ese vehiculo*/
+        const respuesta = await fetch(`http://localhost:3000/clientes`);  
         if (!respuesta.ok) {
           throw new Error('No se pudo cargar el archivo JSON');
         }
-        return await respuesta.json();
-        
+        const clientes =  await respuesta.json();
+
+        const clientesFiltrados = clientes.filter((cliente) => {
+          const alquileres = cliente.alquileres; 
+          if(alquileres == null || alquileres.length == 0) {
+            return false;
+          }
+
+          for (const alquiler of alquileres)  {
+            if(alquiler.vehiculo == idVehiculo ) {
+              return true;
+            }
+
+          }
+
+          return false;
+        })
+        return clientesFiltrados;
+
       } catch (error) {
         console.error('Error al cargar las vehiculos:', error);
         return [];
       }
     },
-
-    async obtenerVehiculos() {
-      
-    }
-
-    }
+  }
 }
 </script>
     
