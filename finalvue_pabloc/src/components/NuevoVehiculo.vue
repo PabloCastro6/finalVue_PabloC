@@ -13,7 +13,7 @@
             <label for="modelo">Modelo:</label>
             <select id="modelo" v-model="nuevoVehiculo.idModelo"
                 :disabled="modeloPreseleccionado != null || marcaSeleccionada == null">
-                <option v-for="modelo in modelosFiltrados" :key="modelo.id" :value="modelo.id">
+                <option v-for="modelo in modelos" :key="modelo.id" :value="modelo.id">
                     {{ modelo.modelo }}
                 </option>
             </select>
@@ -52,22 +52,41 @@ export default {
             },
         };
     },
-    computed: {
-        modelosFiltrados() {
-            return this.modeloPreseleccionado ? this.modelos : this.modelos.filter(modelo => modelo.idMarca === this.marcaSeleccionada);
+    watch: {
+
+        async marcaSeleccionada(idMarca) {
+            this.modelos = await this.obtenerModelos(idMarca);
         },
+
     },
     methods: {
-        async cargarDatos() {
+        async obtenerMarcas() {
             try {
-                const respuesta = await fetch('/bbdd.json');
-                const datos = await respuesta.json();
-                this.marcas = datos.marcas;
-                this.modelos = datos.modelos;
+                const respuesta = await fetch('http://localhost:3000/marcas');
+                if (!respuesta.ok) {
+                    throw new Error('No se pudo cargar el archivo JSON');
+                }
+                return await respuesta.json();
             } catch (error) {
-                console.error('Error al cargar los datos:', error);
+                console.error('Error al cargar las marcas:', error);
+                return [];
             }
         },
+
+        async obtenerModelos(idMarca) {
+            try {
+                const respuesta = await fetch(`http://localhost:3000/modelos?idMarca=${idMarca}`);
+                if (!respuesta.ok) {
+                    throw new Error('No se pudo cargar el archivo JSON');
+                }
+                return await respuesta.json();
+
+            } catch (error) {
+                console.error('Error al cargar las modelos:', error);
+                return [];
+            }
+        },
+
         async agregarVehiculo() {
             console.log(this.nuevoVehiculo)
             try {
@@ -84,10 +103,15 @@ export default {
             }
         },
     },
-    mounted() {
-        this.cargarDatos();
+    async mounted() {
+        this.marcas = await this.obtenerMarcas();
+        if(this.marcaPreseleccionada) {
+            this.modelos = await this.obtenerModelos(this.marcaPreseleccionada);
+        }
     }
+
 }
+
 
 </script>
   
