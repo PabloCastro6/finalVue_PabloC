@@ -8,7 +8,7 @@ import NuevaMarca from '@/views/NuevaMarca.vue'
 import Modelos from '@/views/Modelos.vue'
 import NuevoModelo from '@/views/NuevoModelo.vue'
 
-import Vehiculos from '@/views/Vehiculos.vue'
+import Vehiculo from '@/views/Vehiculo.vue'
 import NuevoVehiculo from '@/views/NuevoVehiculo.vue'
 import Alquiler from '@/views/Alquiler.vue'
 
@@ -45,9 +45,9 @@ const routes = [
     component: NuevoModelo
   },
   {
-    path: '/vehiculos',
-    name: 'Vehiculos',
-    component: Vehiculos
+    path: '/vehiculo',
+    name: 'Vehiculo',
+    component: Vehiculo
   },
   {
     path: '/vehiculos/nuevo',

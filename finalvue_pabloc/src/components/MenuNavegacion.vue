@@ -16,7 +16,7 @@
         </ul>
       </li>
       <li>
-        <router-link to="/vehiculos">Vehiculos</router-link>
+        <router-link to="/vehiculo">Vehiculos</router-link>
         <ul class="submenu">
           <li><router-link to="/vehiculos/nuevo">Nuevo vehículo</router-link></li>
           <li><router-link to="/vehiculos/alquiler">Alquiler</router-link></li>

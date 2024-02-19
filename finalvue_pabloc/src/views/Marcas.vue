@@ -1,6 +1,5 @@
 <template>
   <div class="contenedor">
-    <!-- Listado de Marcas -->
     <div class="marcas">
       <h1>Listado de Marcas</h1>
       <ul>
@@ -9,7 +8,6 @@
         </li>
       </ul>
     </div>
-    <!-- Modelos de la Marca Seleccionada -->
     <div class="modelos" v-if="marcaSeleccionada">
       <h2>Modelos de {{ marcaSeleccionada.nombre }}</h2>
       <ul>
@@ -28,24 +26,21 @@ export default {
     return {
       marcas: [],
       modelos: [],
-      vehiculos: [], // Agregar vehículos aquí
+      vehiculos: [], 
       marcaSeleccionada: null,
     };
   },
   computed: {
     marcasOrdenadas() {
-       // Crea una copia del array de marcas y luego ordena esa copia
       return  [...this.marcas].sort((a, b) => b.precioMedio - a.precioMedio);
     },
     modelosDeMarcaSeleccionada() {
       if (!this.marcaSeleccionada) return [];
-      // Filtra modelos por la marca seleccionada y encuentra su precio en los vehículos
+      
       return this.modelos
         .filter(modelo => modelo.idMarca === this.marcaSeleccionada.id)
         .map(modelo => {
-          // Encuentra vehículos para este modelo
           const vehiculo = this.vehiculos.find(v => v.idModelo === modelo.id);
-          // Añade precioDia al modelo, si el vehículo existe
           return { ...modelo, precioDia: vehiculo ? vehiculo.precioDia : 'No disponible' };
         });
     }
@@ -61,7 +56,6 @@ export default {
         this.modelos = modelos;
         this.vehiculos = vehiculos;
 
-        // Calcula el precio medio de los modelos para cada marca
         this.marcas = marcas.map(marca => {
           const modelosDeMarca = modelos.filter(modelo => modelo.idMarca === marca.id);
           const precios = modelosDeMarca.map(modelo => {
@@ -87,27 +81,27 @@ export default {
 }
 
 .marcas, .modelos {
-  flex-basis: 45%; /* Ajusta el ancho de cada columna */
-  border: 1px solid #ccc; /* Borde para delimitar las áreas */
+  flex-basis: 45%; 
+  border: 1px solid #ccc; 
   padding: 20px;
-  border-radius: 8px; /* Bordes redondeados */
-  background-color: #f9f9f9; /* Fondo claro */
+  border-radius: 8px; 
+  background-color: #f9f9f9; 
 }
 
 .marcas li, .modelos li {
   cursor: pointer;
   margin: 5px 0;
-  list-style-type: none; /* Quitar estilos de lista */
+  list-style-type: none; 
   padding: 10px;
-  border-bottom: 1px solid #eee; /* Borde sutil entre elementos */
+  border-bottom: 1px solid #eee; 
 }
 
 .marcas li:hover, .modelos li:hover {
-  background-color: #eaeaea; /* Cambio de color al pasar el ratón */
+  background-color: #eaeaea; 
 }
 
 .marcas h1, .modelos h2 {
-  color: #333; /* Color de texto para los títulos */
-  margin-bottom: 20px; /* Espacio después del título */
+  color: #333; 
+  margin-bottom: 20px; 
 }
 </style>  
