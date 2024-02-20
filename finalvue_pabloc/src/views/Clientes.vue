@@ -83,7 +83,7 @@ export default {
 
     async modificarCliente() {
         // Método para actualizar un cliente existente
-         // Agregar lógica para PUT/PATCH al servidor 
+        // Agregar lógica para PUT/PATCH al servidor 
       try {
         const respuesta = await fetch(`http://localhost:3000/clientes/${this.clienteSeleccionado.id}`, {
           method: 'PUT',
@@ -107,7 +107,7 @@ export default {
 
     async eliminarCliente() {
         // Método para eliminar un cliente
-        // Agregar lógica para DELETE al servidor o eliminación local
+        // Agregar lógica para DELETE al servidor 
       try {
         const respuesta = await fetch(`http://localhost:3000/clientes/${this.clienteSeleccionado.id}`, {
           method: 'DELETE',
@@ -170,14 +170,14 @@ export default {
 
 .clientes-formulario form {
     display: flex;
-    flex-direction: column; /* Organizar los campos del formulario en columna */
+    flex-direction: column; 
 }
 
 .clientes-formulario input[type="text"] {
-    margin-bottom: 10px; /* Espacio entre los inputs */
+    margin-bottom: 10px; 
     padding: 8px;
-    border: 1px solid #ccc; /* Borde de los inputs */
-    border-radius: 4px; /* Bordes redondeados de los inputs */
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
 }
 
 .clientes-formulario button {
