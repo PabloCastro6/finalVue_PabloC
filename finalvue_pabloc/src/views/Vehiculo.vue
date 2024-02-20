@@ -57,7 +57,6 @@ export default {
   },
   watch: {
     /* Se usa para observar el valor de la variable marcaSeleccionada, para listar los modelos*/
-
     async marcaSeleccionada(idMarca) {
       this.modelos = await this.obtenerModelos(idMarca);
       this.vehiculos = [];

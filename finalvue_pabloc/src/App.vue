@@ -30,12 +30,9 @@ body {
   color: #333;
 }
 
-.izquierda {
-  overflow: scroll;
-}
+
 .derecha{
 margin-left: 250px;
-overflow: scroll;
 }
 
 </style>

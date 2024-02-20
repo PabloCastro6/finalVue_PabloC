@@ -10,16 +10,17 @@
 
 
         <div class="clientes-formulario">
-            <form @submit.prevent="clienteSeleccionado ? modificarCliente() : agregarCliente()">
-                <input type="text" v-model="formCliente.nombre" placeholder="Nombre del cliente" />
-                <input type="text" v-model="formCliente.dni" placeholder="DNI del cliente" />
+    <form @submit.prevent="clienteSeleccionado ? modificarCliente() : agregarCliente()">
+      <input type="text" v-model="formCliente.nombre" placeholder="Nombre del cliente" />
+      <input type="text" v-model="formCliente.dni" placeholder="DNI del cliente" />
 
-                <button type="submit" :disabled="clienteSeleccionado">Alta</button>
-                <button type="button" @click="modificarCliente" :disabled="!clienteSeleccionado">Modificar</button>
-                <button type="button" @click="eliminarCliente" :disabled="!clienteSeleccionado">Eliminar</button>
-            </form>
+      <button type="submit" :disabled="clienteSeleccionado">Alta</button>
+      <button type="button" @click="modificarCliente" :disabled="!clienteSeleccionado">Modificar</button>
+      <button type="button" @click="eliminarCliente" :disabled="!clienteSeleccionado">Eliminar</button>
+    </form>
         </div>
-    </div>
+  </div>
+    
 </template>
   
 <script>
@@ -44,7 +45,7 @@ export default {
                 if (respuesta.ok) {
                     const clientes = await respuesta.json();
                     this.clientes = clientes;
-                    this.limpiarFormulario(); // Limpiar formulario
+                    this.limpiarFormulario(); 
                 } else {
                     console.error('Error al dar de alta el cliente:', respuesta);
                 }
@@ -59,18 +60,69 @@ export default {
         async agregarCliente() {
             // Método para añadir un nuevo cliente
             // Agregar lógica para POST al servidor 
-            this.limpiarFormulario();
-        },
-        async modificarCliente() {
-            // Método para actualizar un cliente existente
-            // Agregar lógica para PUT/PATCH al servidor 
-            this.limpiarFormulario();
-        },
-        async eliminarCliente() {
-            // Método para eliminar un cliente
-            // Agregar lógica para DELETE al servidor o eliminación local
-            this.limpiarFormulario();
-        },
+      try {
+        const respuesta = await fetch('http://localhost:3000/clientes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.formCliente),
+        });
+
+        if (respuesta.ok) {
+          const nuevoCliente = await respuesta.json();
+          this.clientes.push(nuevoCliente);
+          this.limpiarFormulario();
+        } else {
+          console.error('Error al agregar el cliente:', respuesta.statusText);
+        }
+      } catch (error) {
+        console.error('Error al realizar la petición:', error);
+      }
+    },
+
+    async modificarCliente() {
+        // Método para actualizar un cliente existente
+         // Agregar lógica para PUT/PATCH al servidor 
+      try {
+        const respuesta = await fetch(`http://localhost:3000/clientes/${this.clienteSeleccionado.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.formCliente),
+        });
+
+        if (respuesta.ok) {
+          const index = this.clientes.findIndex(c => c.id === this.clienteSeleccionado.id);
+          this.clientes[index] = await respuesta.json();
+          this.limpiarFormulario();
+        } else {
+          console.error('Error al modificar el cliente:', respuesta.statusText);
+        }
+      } catch (error) {
+        console.error('Error al realizar la petición:', error);
+      }
+    },
+
+    async eliminarCliente() {
+        // Método para eliminar un cliente
+        // Agregar lógica para DELETE al servidor o eliminación local
+      try {
+        const respuesta = await fetch(`http://localhost:3000/clientes/${this.clienteSeleccionado.id}`, {
+          method: 'DELETE',
+        });
+
+        if (respuesta.ok) {
+          this.clientes = this.clientes.filter(c => c.id !== this.clienteSeleccionado.id);
+          this.limpiarFormulario();
+        } else {
+          console.error('Error al eliminar el cliente:', respuesta.statusText);
+        }
+      } catch (error) {
+        console.error('Error al realizar la petición:', error);
+      }
+    },
         limpiarFormulario() {
             this.clienteSeleccionado = null;
             this.formCliente = { nombre: '', dni: '' };
@@ -82,18 +134,69 @@ export default {
 <style>
 .clientes-container {
     display: flex;
+    justify-content: space-between; 
+    padding: 20px; 
 }
 
 .clientes-listado {
-    width: 50%;
-    /* Estilos adicionales */
+    width: 40%; 
+    margin-right: 20px; 
+}
+
+.clientes-listado ul {
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.clientes-listado li {
+    padding: 10px;
+    border: 1px solid #ccc; 
+    margin-bottom: 5px; 
+    cursor: pointer; 
+    background-color: #f9f9f9; 
+}
+
+.clientes-listado li:hover {
+    background-color: #eaeaea;
 }
 
 .clientes-formulario {
-    width: 50%;
-    /* Estilos adicionales */
+    width: 55%; 
+    padding: 20px;
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #fff;
 }
 
-/* Estilos adicionales para botones, input, etc. */
+.clientes-formulario form {
+    display: flex;
+    flex-direction: column; /* Organizar los campos del formulario en columna */
+}
+
+.clientes-formulario input[type="text"] {
+    margin-bottom: 10px; /* Espacio entre los inputs */
+    padding: 8px;
+    border: 1px solid #ccc; /* Borde de los inputs */
+    border-radius: 4px; /* Bordes redondeados de los inputs */
+}
+
+.clientes-formulario button {
+    padding: 10px 15px;
+    margin-right: 10px; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #5cb85c; 
+    color: white; 
+}
+
+.clientes-formulario button:disabled {
+    background-color: #cccccc; 
+    cursor: not-allowed; 
+}
+
+.clientes-formulario button:not(:disabled):hover {
+    opacity: 0.8; 
+}
 </style>
   

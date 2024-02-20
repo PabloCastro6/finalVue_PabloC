@@ -142,7 +142,30 @@
           "fechaInic": "12/11/2022"
         }
       ]
+    },
+    {
+      "id": 2,
+      "nombre": "Sergio Conrrado",
+      "dni": "764345437I",
+      "alquileres": [
+        {
+          "vehiculo": 3,
+          "numDias": 2,
+          "fechaInic": "15/09/2021"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nombre": "Jesus Garcia",
+      "dni": "76098137I",
+      "alquileres": [
+        {
+          "vehiculo": 4,
+          "numDias": 6,
+          "fechaInic": "1/11/2020"
+        }
+      ]
     }
-   
   ]
 }
