@@ -27,7 +27,7 @@
       <label for="vehiculo">Vehículo:</label>
       <select id="vehiculo" v-model="idVehiculoSeleccionado" :disabled="!idModeloSeleccionado" required>
         <option value="">Seleccione un vehículo</option>
-        <option v-for="vehiculo in vehiculos" :key="vehiculo.id" :value="vehiculo">
+        <option v-for="vehiculo in vehiculos" :key="vehiculo.id" :value="vehiculo.id">
           {{ vehiculo.nombre }} - {{ vehiculo.precioDia }} €/día
         </option>
       </select>
@@ -43,22 +43,22 @@
 
     <div>
       <label for="dias">Número de días:</label>
-      <input type="number" id="dias" v-model="dias" min="1" required>
+      <input type="number" id="dias" v-model="nuevoAlquiler.dias" min="1" required>
     </div>
 
     <div>
       <label for="fechaInicio">Fecha de inicio:</label>
-      <input type="date" id="fechaInicio" v-model="fechaInicio" required>
+      <input type="date" id="fechaInicio" v-model="nuevoAlquiler.fechaInicio" required>
     </div>
 
     <button @click="realizarAlquiler" :disabled="!puedeAlquilar">Alquilar</button>
 
     <div v-if="alquilerRealizado">
       <h3>Resumen de Alquiler</h3>
-      <p>Marca: {{ idVehiculoSeleccionado.marca }}</p>
-      <p>Modelo: {{ idVehiculoSeleccionado.modelo }}</p>
-      <p>Cliente: {{ idClienteSeleccionado.nombre }}</p>
-      <p>DNI: {{ idClienteSeleccionado.dni }}</p>
+      <p>Marca: {{ nuevoAlquiler.marca.nombre }}</p>
+      <p>Modelo: {{ nuevoAlquiler.modelo.modelo }}</p>
+      <p>Cliente: {{ nuevoAlquiler.cliente.nombre }}</p>
+      <p>DNI: {{ nuevoAlquiler.cliente.dni }}</p>
       <p>Precio Total: {{ precioTotal }} €</p>
     </div>
   </template>
@@ -78,14 +78,20 @@ export default {
       idModeloSeleccionado: null,
       idVehiculoSeleccionado: null,
       idClienteSeleccionado: null,
+      alquilerRealizado: false,
+      nuevoAlquiler: {
       dias: 0,
       fechaInicio: '',
-      alquilerRealizado: false
+      modelo: null,
+      marca: null,
+      cliente: null,
+      vehiculo: null,
+      }
     };
   },
   computed: {
     puedeAlquilar() {
-      return this.idMarcaSeleccionada && this.idModeloSeleccionado && this.idVehiculoSeleccionado && this.idClienteSeleccionado && this.dias && this.fechaInicio;
+      return this.idMarcaSeleccionada && this.idModeloSeleccionado && this.idVehiculoSeleccionado && this.idClienteSeleccionado && this.nuevoAlquiler.dias && this.nuevoAlquiler.fechaInicio;
     },
     vehiculoSeleccionado() {
       return this.vehiculos.find((vehiculo)=>   vehiculo.id == this.idVehiculoSeleccionado); 
@@ -96,8 +102,11 @@ export default {
     modeloSeleccionado() {
       return this.modelos.find((modelo)=>   modelo.id == this.idModeloSeleccionado); 
     },
+    marcaSeleccionada() {
+      return this.marcas.find((marca)=>   marca.id == this.idMarcaSeleccionada); 
+    },
     precioTotal() {
-      return this.vehiculoSeleccionado.precioDia * this.dias + this.modeloSeleccionado.extraPorModelo;
+      return this.nuevoAlquiler.vehiculo.precioDia * this.nuevoAlquiler.dias + this.nuevoAlquiler.modelo.extraPorModelo;
     }
   },
   watch: {
@@ -168,6 +177,10 @@ export default {
       if (this.puedeAlquilar) {
         // Accion de realizar el alquiler
         // Calcula el precio total, incluyendo el extra por modelo si aplica
+        this.nuevoAlquiler.marca = this.marcaSeleccionada;
+        this.nuevoAlquiler.modelo = this.modeloSeleccionado;
+        this.nuevoAlquiler.vehiculo = this.vehiculoSeleccionado;
+        this.nuevoAlquiler.cliente = this.clienteSeleccionado;
         this.alquilerRealizado = true;
       }
     }
