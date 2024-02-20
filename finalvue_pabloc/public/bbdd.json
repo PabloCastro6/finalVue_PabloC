@@ -25,10 +25,10 @@
       "anioFundacion": 2003
     },
     {
-      "id": 5,
       "nombre": "Ford",
       "origen": "Estados Unidos",
-      "anioFundacion": 1903
+      "anioFundacion": 1904,
+      "id": 5
     }
   ],
   "modelos": [
@@ -116,8 +116,8 @@
   "clientes": [
     {
       "id": 1,
-      "nombre": "Diego Velázquez",
-      "dni": "76523137I",
+      "nombre": "Pablo Castro ",
+      "dni": "70907834Q",
       "alquileres": [
         {
           "vehiculo": 1,
@@ -132,7 +132,7 @@
       ]
     },
     {
-      "id": 1,
+      "id": 2,
       "nombre": "Juanito Gomez",
       "dni": "76453137I",
       "alquileres": [
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "id": 2,
+      "id": 3,
       "nombre": "Sergio Conrrado",
       "dni": "764345437I",
       "alquileres": [
@@ -156,7 +156,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "nombre": "Jesus Garcia",
       "dni": "76098137I",
       "alquileres": [

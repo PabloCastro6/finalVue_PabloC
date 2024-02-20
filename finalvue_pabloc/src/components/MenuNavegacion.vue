@@ -32,21 +32,8 @@
   <script>
   export default {
   name: 'MenuNavegacion',
-  data() {
-    return {
-      submenus: {
-        marcas: false,
-        vehiculos: false
-      }
-    };
-  },
-  methods: {
-    toggleSubmenu(submenu) {
-      console.log(this.submenus);
-      this.submenus[submenu] = !this.submenus[submenu];
-    }
   }
-};
+
   </script>
   
   <style >
