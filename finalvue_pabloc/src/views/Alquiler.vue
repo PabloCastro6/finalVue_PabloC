@@ -51,7 +51,7 @@
       <input type="date" id="fechaInicio" v-model="nuevoAlquiler.fechaInicio" required>
     </div>
 
-    <button @click="realizarAlquiler" :disabled="!puedeAlquilar">Alquilar</button>
+    <button @click="realizarAlquiler" :disabled="!puedeAlquilar"> Realizar Alquiler</button>
 
     <div v-if="alquilerRealizado">
       <h3>Resumen de Alquiler</h3>
